@@ -1,3 +1,27 @@
+<?php
+//koneksi ke database & pilih database
+$db = mysqli_connect('localhost', 'root', '', 'belajar-php');
+
+//query isi tabel mahasiswa
+$result = mysqli_query($db, "SELECT * FROM mahasiswa");
+// var_dump($result);
+
+// ubah data ke dalam array
+// $row = mysqli_fetch_row($result);  //array numerik
+// $row = mysqli_fetch_assoc($result); //array assosiatif 
+// $row = mysqli_fetch_array($result); //array numerik dan assosiatif
+$rows = []; //menampung array dalam array kosong
+while ($row = mysqli_fetch_assoc($result)) {
+  $rows[] = $row;
+}
+
+
+// tampung ke variabel mahasiswa
+$mahasiswa = $rows;
+
+// var_dump($mahasiswa);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -20,15 +44,17 @@
       <th>Jurusan</th>
       <th>Aksi</th>
     </tr>
-    <tr>
-      <td>1</td>
-      <td><img src="./img/sandhika.jpeg"></td>
-      <td>12345</td>
-      <td>Danang</td>
-      <td>Pawindyanto@gmail.com</td>
-      <td>Teknik Komputer</td>
-      <td><a href="">Ubah</a> / <a href="">Hapus</a></td>
-    </tr>
+    <?php foreach ($mahasiswa as $mhs) : ?>
+      <tr>
+        <td><?= $mhs['id']; ?></td>
+        <td><img src="./img/<?= $mhs['gambar']; ?>" width="60"></td>
+        <td><?= $mhs['npm']; ?></td>
+        <td><?= $mhs['nama']; ?></td>
+        <td><?= $mhs['email']; ?></td>
+        <td><?= $mhs['prodi']; ?></td>
+        <td><a href="">Ubah</a> / <a href="">Hapus</a></td>
+      </tr>
+    <?php endforeach; ?>
   </table>
 </body>
 
