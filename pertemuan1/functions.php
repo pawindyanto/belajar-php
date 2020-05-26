@@ -27,3 +27,26 @@ function query($query)
 
   return $rows;
 }
+
+function tambah($data)
+{
+  $conn = koneksi();
+
+  $nama = htmlspecialchars($data['nama']);
+  $npm = htmlspecialchars($data['npm']);
+  $email = htmlspecialchars($data['email']);
+  $prodi = htmlspecialchars($data['prodi']);
+  $gambar = htmlspecialchars($data['gambar']);
+
+
+  $query = "INSERT INTO
+              mahasiswa
+            VALUES
+              (null,'$nama','$npm','$email','$prodi','$gambar');
+            ";
+  mysqli_query($conn, $query);
+
+  echo mysqli_error($conn);
+
+  return mysqli_affected_rows($conn);
+}
